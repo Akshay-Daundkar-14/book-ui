@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BookModel } from '../Model/book';
@@ -12,9 +12,9 @@ export class BookService {
 
   constructor(private http:HttpClient) { }
 
-  getBooks():Observable<BookModel[]>{
-    return this.http.get<BookModel[]>(this.apiUrl);
-  }
+  // getBooks():Observable<BookModel[]>{
+  //   return this.http.get<BookModel[]>(this.apiUrl);
+  // }
 
   getBookById(id:number):Observable<BookModel>{
     return this.http.get<BookModel>(this.apiUrl+"/"+id);
@@ -33,6 +33,16 @@ export class BookService {
   deleteBook(id?:number) : Observable<void>
   {
     return this.http.delete<void>(this.apiUrl+'/'+id);
+  }
+
+  getBooks(genre:any, author:any, sortColumn: string, sortOrder: string):Observable<BookModel[]> {
+    let params = new HttpParams()
+      .set('genre', genre)
+      .set('author', author)
+      .set('sortColumn', sortColumn)
+      .set('sortOrder', sortOrder);
+    console.log("Service called");
+    return this.http.get<BookModel[]>(this.apiUrl+'/search', { params });
   }
 
 }

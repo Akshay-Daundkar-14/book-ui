@@ -25,6 +25,8 @@ export class BookComponent implements OnInit {
     publishedYear: undefined,
     price: undefined,
   };
+  sortColumn: string = 'Title';
+  sortOrder: string = 'ASC';
   editMode: boolean = false;
   genreList: string[] = [
     'Motivational',
@@ -85,8 +87,21 @@ export class BookComponent implements OnInit {
   }
 
   getBookList() {
-    this._bookService.getBooks().subscribe((res) => {
+    console.log("BookList Called");
+    this._bookService.getBooks(this.book.genre,this.book.author,this.sortColumn,this.sortOrder).subscribe((res) => {
       this.bookList = res;
+      console.log(res)
     });
+  }
+
+  onSort(column: string): void {
+    this.sortColumn = column;
+    this.sortOrder = this.sortOrder === 'ASC' ? 'DESC' : 'ASC';
+    this.getBookList();
+  }
+
+  onFilter(): void {
+    console.log("Filter Get CAlled",this.book.genre);
+    this.getBookList();
   }
 }

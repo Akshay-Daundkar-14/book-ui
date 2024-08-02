@@ -10,7 +10,8 @@
               <h6 class="p-2">Book List</h6>
             </div>
             <div class="col-6 text-end">
-              <button class="btn btn-info">Add Book</button>
+              <input type="text" [(ngModel)]="book.genre" class="inputstyle" (blur)="onFilter()" placeholder="Filter by Genre">
+              <input type="text" [(ngModel)]="book.author"  class="inputstyle"  (blur)="onFilter()" placeholder="Filter by Author">
             </div>
           </div>
         </div>
@@ -19,11 +20,11 @@
           <table class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>Published Year</th>
-                <th>Price</th>
+                <th>Title <i (click)="onSort('Title')" class="fa fa-arrow-down float-end"></i></th>
+                <th>Author <i (click)="onSort('Author')" class="fa fa-arrow-down float-end"></i></th>
+                <th>Genre <i (click)="onSort('Genre')" class="fa fa-arrow-down float-end"></i></th>
+                <th>Published Year <i (click)="onSort('PublishedYear')" class="fa fa-arrow-down float-end"></i></th>
+                <th>Price <i (click)="onSort('Price')" class="fa fa-arrow-down float-end"></i></th>
                 <th>Action</th>
               </tr>
             </thead>
