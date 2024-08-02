@@ -1,41 +1,47 @@
 <div class="card">
-    <div class="card-header bg-primary">
-      <div class="row">
-        <div class="col-6 text-white">
-          <h6 class="p-2">Book List</h6>
-        </div>
-        <div class="col-6 text-end">
-          <button class="btn btn-info" (click)="onAddBook()">Add Book</button>
-        </div>
+  <div class="card-header bg-primary">
+    <div class="row">
+      <div class="col-6 text-white">
+        <h6 class="p-2">Book List</h6>
+      </div>
+      <div class="col-6 text-end">
+        <input type="text" [(ngModel)]="genreFilter" class="inputstyle" (blur)="onFilter()" placeholder="Filter by Genre">
+        <input type="text" [(ngModel)]="authorFilter" class="inputstyle" (blur)="onFilter()" placeholder="Filter by Author">
       </div>
     </div>
-    <div class="card-body" *ngIf="bookList && bookList.length > 0">
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Genre</th>
-            <th>Published Year</th>
-            <th>Price</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let book of bookList; let i = index;">
-            <td>{{ book.title }}</td>
-            <td>{{ book.author }}</td>
-            <td>{{ book.genre }}</td>
-            <td class="text-center">{{ book.publishedYear }}</td>
-            <td>{{ book.price + ".00" }}</td>
-            <td class="text-center">
-              <i class="fa fa-edit text-primary custom-font-size" (click)="onEdit(book)"></i>
-              &nbsp; <span class="custom-font-size">|</span> &nbsp;
-              <i class="fa fa-trash text-danger custom-font-size" (click)="onDelete(book.bookID)"></i>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
-  
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Title <i (click)="onSort('Title')" class="fa fa-arrow-down float-end"></i></th>
+          <th>Author <i (click)="onSort('Author')" class="fa fa-arrow-down float-end"></i></th>
+          <th>Genre <i (click)="onSort('Genre')" class="fa fa-arrow-down float-end"></i></th>
+          <th>Published Year <i (click)="onSort('PublishedYear')" class="fa fa-arrow-down float-end"></i></th>
+          <th>Price <i (click)="onSort('Price')" class="fa fa-arrow-down float-end"></i></th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of bookList; trackBy: trackByIndex">
+          <td>{{ book.title }}</td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.genre }}</td>
+          <td class="text-center">{{ book.publishedYear }}</td>
+          <td>{{ book.price + ".00" }}</td>
+          <td class="text-center">
+            <i
+              class="fa fa-edit text-primary custom-font-size"
+              (click)="onEdit(book)"
+            ></i>
+            &nbsp; <span class="custom-font-size">|</span> &nbsp;
+            <i
+              class="fa fa-trash text-danger custom-font-size"
+              (click)="onDelete(book.bookID)"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

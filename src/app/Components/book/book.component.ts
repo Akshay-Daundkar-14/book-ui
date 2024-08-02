@@ -21,8 +21,10 @@ export class BookComponent implements OnInit {
     author: '',
     genre: '',
     publishedYear: undefined,
-    price: undefined,
+    price: undefined
   };
+  sortColumn: string = 'Title';
+  sortOrder: string = 'ASC';
   editMode: boolean = false;
   genreList: string[] = [
     'Motivational',
@@ -32,10 +34,13 @@ export class BookComponent implements OnInit {
     'Self Help',
     'Adventure',
     'Horror',
-    'History',
+    'History'
   ];
 
-  constructor(private _bookService: BookService, private _toasterService: ToastrService) {}
+  constructor(
+    private _bookService: BookService,
+    private _toasterService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getBookList();
@@ -46,43 +51,42 @@ export class BookComponent implements OnInit {
       this._bookService.updateBook(this.book).subscribe((res) => {
         this.editMode = false;
         this.getBookList();
-        this.resetForm();
-        this._toasterService.success('Book Updated Successfully', 'Updated!!');
+        this.reset();
+        this._toasterService.warning('Book Updated Successfully', 'Updated!!');
       });
     } else {
       this._bookService.addBook(this.book).subscribe((res) => {
         this.getBookList();
-        this.resetForm();
+        this.reset();
         this._toasterService.success('Book Added Successfully', 'Success!!');
       });
     }
   }
 
-  resetForm() {
+  reset() {
     this.book = {
       title: '',
       author: '',
       genre: '',
       publishedYear: undefined,
-      price: undefined,
+      price: undefined
     };
   }
 
-  onResetForm(form: NgForm) {
-    form.reset();
+  onResetForm() {
+    this.reset();
     this.editMode = false;
     this.getBookList();
   }
 
   onEdit(book: BookModel) {
-    this.book = book;
+    this.book = { ...book };
     this.editMode = true;
   }
 
-  onDelete(bookID: any) {
-    let isConfirm = confirm("Are you sure? You want to delete this book?");
-    if (isConfirm) {
-      this._bookService.deleteBook(bookID).subscribe((res) => {
+  onDelete(bookID: number) {
+    if (confirm("Are you sure? You want to delete this book?")) {
+      this._bookService.deleteBook(bookID).subscribe(() => {
         this.getBookList();
         this._toasterService.error('Book Deleted Successfully', 'Deleted!!');
       });
@@ -90,13 +94,19 @@ export class BookComponent implements OnInit {
   }
 
   getBookList() {
-    this._bookService.getBooks().subscribe((res) => {
-      this.bookList = res;
-    });
+    this._bookService.getBooks(this.book.genre, this.book.author, this.sortColumn, this.sortOrder)
+      .subscribe((res) => {
+        this.bookList = res;
+      });
   }
 
-  onAddBook() {
-    this.resetForm();
-    this.editMode = false;
+  onSort(column: string): void {
+    this.sortColumn = column;
+    this.sortOrder = this.sortOrder === 'ASC' ? 'DESC' : 'ASC';
+    this.getBookList();
+  }
+
+  onFilter(): void {
+    this.getBookList();
   }
 }

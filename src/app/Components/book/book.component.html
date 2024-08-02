@@ -1,20 +1,25 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-8">
+      <!-- Book List -->
       <app-book-list
         [bookList]="bookList"
-        (editBook)="onEdit($event)"
-        (deleteBook)="onDelete($event)"
-        (addBook)="onAddBook()"
+        [genreFilter]="book.genre"
+        [authorFilter]="book.author"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)"
+        (filter)="onFilter()"
+        (sort)="onSort($event)"
       ></app-book-list>
     </div>
     <div class="col-4">
+      <!-- Book Form -->
       <app-book-form
         [book]="book"
-        [genreList]="genreList"
         [editMode]="editMode"
-        (formSubmit)="onSubmit($event)"
-        (formReset)="onResetForm($event)"
+        [genreList]="genreList"
+        (submit)="onSubmit($event)"
+        (reset)="onResetForm(bookForm)"
       ></app-book-form>
     </div>
   </div>

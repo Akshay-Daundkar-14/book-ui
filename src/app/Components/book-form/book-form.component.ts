@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { BookModel } from '../../Model/book';
 import { FormsModule, NgForm } from '@angular/forms';
+import { BookModel } from '../../Model/book';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,18 +10,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './book-form.component.html',
 })
 export class BookFormComponent {
-  
   @Input() book: BookModel = { title: '', author: '', genre: '', publishedYear: undefined, price: undefined };
-  @Input() genreList: string[] = [];
   @Input() editMode: boolean = false;
-  @Output() formSubmit = new EventEmitter<NgForm>();
-  @Output() formReset = new EventEmitter<NgForm>();
+  @Input() genreList: string[] = [];
+  @Output() submit = new EventEmitter<NgForm>();
+  @Output() reset = new EventEmitter<void>();
 
   onSubmit(form: NgForm) {
-    this.formSubmit.emit(form);
+    this.submit.emit(form);
   }
 
-  onResetForm(form: NgForm) {
-    this.formReset.emit(form);
+  onResetForm() {
+    this.reset.emit();
   }
 }
