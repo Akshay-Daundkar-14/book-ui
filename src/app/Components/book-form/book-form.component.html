@@ -1,0 +1,81 @@
+<div class="card">
+    <div class="card-header bg-primary">
+      <div class="row">
+        <div class="col-6 text-white">
+          <h6 class="p-2">{{editMode ? "Edit" : "Add"}} Book</h6>
+        </div>
+        <div class="col-6 text-end">
+          <button class="btn btn-info" (click)="onResetForm(bookForm)">
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <form #bookForm="ngForm" class="g-3" (ngSubmit)="onSubmit(bookForm)">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            [(ngModel)]="book.title"
+            class="form-control"
+            id="title"
+            name="title"
+            required
+            placeholder="Title"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="author" class="form-label">Author</label>
+          <input
+            type="text"
+            [(ngModel)]="book.author"
+            class="form-control"
+            id="author"
+            name="author"
+            required
+            placeholder="Author"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="genre" class="form-label">Genre</label>
+          <select
+            class="form-select"
+            required
+            id="genre"
+            name="genre"
+            [(ngModel)]="book.genre"
+          >
+            <option selected disabled>Select Genre</option>
+            <option *ngFor="let genre of genreList">{{ genre }}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="publishedYear" class="form-label">Published Year</label>
+          <input
+            type="text"
+            [(ngModel)]="book.publishedYear"
+            class="form-control"
+            id="publishedYear"
+            name="publishedYear"
+            required
+            placeholder="Published Year"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="price" class="form-label">Price</label>
+          <input
+            type="text"
+            [(ngModel)]="book.price"
+            class="form-control"
+            id="price"
+            name="price"
+            required
+            placeholder="Price"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">{{editMode ? "Edit" : "Submit"}}</button>
+      </form>
+    </div>
+  </div>
+  
